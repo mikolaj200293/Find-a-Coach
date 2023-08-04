@@ -1,6 +1,12 @@
 <template>
+    <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
+        <p>{{ error }}</p>
+    </base-dialog>
     <section>
-        <base-card>
+        <div v-if="isLoading">
+            <base-spinner></base-spinner>
+        </div>
+        <base-card v-else>
             <h2>Register as a coach</h2>
             <coach-form @save-data="saveData"></coach-form>
         </base-card>
@@ -9,17 +15,32 @@
 
 <script>
 import CoachForm from '@/components/coaches/CoachForm.vue';
+import BaseDialog from '@/components/ui/BaseDialog.vue';
 
 export default {
-    components: {CoachForm},
+    components: {BaseDialog, CoachForm},
     data() {
-        return {};
+        return {
+            isLoading: false,
+            error: null
+        };
     },
     methods: {
-        saveData(data) {
-            this.$store.dispatch('coaches/registerCoach', data);
-            this.$router.replace('/coaches');
-        }
+        async saveData(data) {
+            this.isLoading = true;
+            try {
+                await this.$store.dispatch('coaches/registerCoach', data);
+            } catch (error) {
+                this.error = error.message || 'Something went wrong';
+            }
+            this.isLoading = false;
+            if (!this.error) {
+                this.$router.replace('/coaches');
+            }
+        },
+        handleError() {
+            this.error = null;
+        },
     }
 };
 </script>
