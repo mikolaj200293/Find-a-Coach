@@ -16,15 +16,6 @@
     </header>
 </template>
 
-<script>
-export default {
-    data() {
-        return {}
-    },
-    methods: {}
-}
-</script>
-
 <style scoped>
 header {
     width: 100%;

@@ -15,10 +15,6 @@ export default {
             return 'mailto:' + this.email;
         }
     },
-    data() {
-        return {};
-    },
-    methods: {}
 };
 </script>
 

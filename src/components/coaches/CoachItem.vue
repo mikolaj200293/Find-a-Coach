@@ -21,9 +21,6 @@
 
 export default {
     props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
-    data() {
-        return {};
-    },
     computed: {
         fullName() {
             return this.firstName + ' ' + this.lastName;
@@ -35,7 +32,6 @@ export default {
             return this.$route.path + '/' + this.id;
         }
     },
-    methods: {}
 };
 </script>
 
