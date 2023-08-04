@@ -18,11 +18,10 @@
 </template>
 
 <script>
-import BaseCard from '@/components/ui/BaseCard.vue';
 import RequestItem from '@/components/requests/RequestItem.vue';
 
 export default {
-    components: {RequestItem, BaseCard},
+    components: {RequestItem},
     computed: {
         receivedRequests() {
             return this.$store.getters['requests/requests'];

@@ -42,11 +42,9 @@
 </template>
 
 <script>
-import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
     emits: ['save-data'],
-    components: {BaseButton},
     data() {
         return {
             firstName: {

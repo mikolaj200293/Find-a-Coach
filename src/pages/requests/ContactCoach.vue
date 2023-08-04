@@ -16,10 +16,8 @@
 </template>
 
 <script>
-import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
-    components: {BaseButton},
     data() {
         return {
             email: '',

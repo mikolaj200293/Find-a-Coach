@@ -17,11 +17,9 @@
 </template>
 
 <script>
-import BaseCard from '@/components/ui/BaseCard.vue';
 
 export default {
     emits: ['change-filter'],
-    components: {BaseCard},
     data() {
         return {
             filters: {

@@ -23,12 +23,8 @@
 </template>
 
 <script>
-import BaseCard from '@/components/ui/BaseCard.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
-import BaseBadge from '@/components/ui/BaseBadge.vue';
 
 export default {
-    components: {BaseBadge, BaseButton, BaseCard},
     props: ['id'],
     data() {
         return {

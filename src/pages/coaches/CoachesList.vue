@@ -5,10 +5,13 @@
     <section>
         <base-card>
             <div class="controls">
-                <base-button mode="outline">Refresh</base-button>
-                <base-button link to="/register" v-if="!isCoach">Register coach</base-button>
+                <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
+                <base-button link to="/register" v-if="!isCoach && !isLoading">Register coach</base-button>
             </div>
-            <ul v-if="hasCoaches">
+            <div v-if="isLoading">
+                <base-spinner></base-spinner>
+            </div>
+            <ul v-else-if="hasCoaches">
                 <coach-item
                     v-for="coach in filteredCoaches"
                     :key="coach.id" :id="coach.id"
@@ -25,19 +28,18 @@
 
 <script>
 import CoachItem from '@/components/coaches/CoachItem.vue';
-import BaseCard from '@/components/ui/BaseCard.vue';
-import BaseButton from '@/components/ui/BaseButton.vue';
 import CoachFilter from '@/components/coaches/CoachFilter.vue';
 
 export default {
-    components: {CoachFilter, BaseButton, BaseCard, CoachItem},
+    components: {CoachFilter, CoachItem},
     data() {
         return {
             activeFilters: {
                 frontend: true,
                 backend: true,
                 career: true
-            }
+            },
+            isLoading: false
         };
     },
     computed: {
@@ -54,7 +56,7 @@ export default {
             });
         },
         hasCoaches() {
-            return this.$store.getters["coaches/hasCoaches"];
+            return !this.isLoading && this.$store.getters["coaches/hasCoaches"];
         },
         isCoach() {
             return this.$store.getters['coaches/isCoach'];
@@ -63,7 +65,15 @@ export default {
     methods: {
         setFilters(updatedFilters) {
             this.activeFilters = updatedFilters;
+        },
+        async loadCoaches() {
+            this.isLoading = true;
+            await this.$store.dispatch('coaches/loadCoaches');
+            this.isLoading = false;
         }
+    },
+    created() {
+        this.loadCoaches();
     }
 };
 </script>

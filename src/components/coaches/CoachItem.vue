@@ -18,11 +18,8 @@
 </template>
 
 <script>
-import BaseButton from '@/components/ui/BaseButton.vue';
-import BaseBadge from '@/components/ui/BaseBadge.vue';
 
 export default {
-    components: {BaseBadge, BaseButton},
     props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
     data() {
         return {};
