@@ -19,7 +19,7 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      throw new Error(responseData.message || 'Failed to fetch!');
+      throw new Error(responseData.message || 'Failed to send request!');
     }
 
     context.commit('registerCoach', {

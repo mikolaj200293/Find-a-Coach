@@ -1,4 +1,7 @@
 <template>
+    <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
+        <p>{{ error }}</p>
+    </base-dialog>
     <form @submit.prevent="submitForm">
         <div class="form-control">
             <label for="email">Your E-Mail</label>
@@ -17,16 +20,21 @@
 
 <script>
 
+import BaseDialog from '@/components/ui/BaseDialog.vue';
+
 export default {
+    components: {BaseDialog},
     data() {
         return {
             email: '',
             message: '',
-            formIsValid: true
+            formIsValid: true,
+            isLoading: false,
+            error: null
         };
     },
     methods: {
-        submitForm() {
+        async submitForm() {
             this.formIsValid = true;
             if (this.email === '' ||
                 !this.email.includes('@') ||
@@ -35,13 +43,24 @@ export default {
                 this.formIsValid = false;
                 return;
             }
-            this.$store.dispatch('requests/contactCoach', {
-                email: this.email,
-                message: this.message,
-                coachId: this.$route.params.id
-            });
-            this.$router.replace('/coaches');
-        }
+            this.isLoading = true;
+            try {
+                await this.$store.dispatch('requests/contactCoach', {
+                    email: this.email,
+                    message: this.message,
+                    coachId: this.$route.params.id
+                });
+            } catch (error) {
+                this.error = 'Something went wrong on request send. Try again later.';
+            }
+            this.isLoading = false;
+            if (!this.error) {
+                this.$router.replace('/coaches');
+            }
+        },
+        handleError() {
+            this.error = null;
+        },
     },
     mounted() {
         this.$store.dispatch('requests/hideContactButton');

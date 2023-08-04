@@ -79,7 +79,7 @@ export default {
             try {
                 await this.$store.dispatch('coaches/loadCoaches');
             } catch (error) {
-                this.error = error.message || 'Something went wrong';
+                this.error = 'Something went wrong on coaches load. Try again later.';
             }
             this.isLoading = false;
         }

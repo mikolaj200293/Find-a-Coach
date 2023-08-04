@@ -31,7 +31,7 @@ export default {
             try {
                 await this.$store.dispatch('coaches/registerCoach', data);
             } catch (error) {
-                this.error = error.message || 'Something went wrong';
+                this.error = 'Something went wrong on coach registration. Try again later.';
             }
             this.isLoading = false;
             if (!this.error) {
