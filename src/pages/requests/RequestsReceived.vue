@@ -51,7 +51,7 @@ export default {
             try {
                 await this.$store.dispatch('requests/loadRequests');
             } catch (error) {
-                this.error = 'Something went wrong on request load. Try again later.';
+                this.error = error.message || 'Something went wrong on request load. Try again later.';
             }
             this.isLoading = false;
         },

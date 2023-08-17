@@ -53,7 +53,7 @@ export default {
                     coachId: this.$route.params.id
                 });
             } catch (error) {
-                this.error = 'Something went wrong on request send. Try again later.';
+                this.error = error.message || 'Something went wrong on request send. Try again later.';
             }
             this.isLoading = false;
             if (!this.error) {

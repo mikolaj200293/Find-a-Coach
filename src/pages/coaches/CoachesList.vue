@@ -81,7 +81,7 @@ export default {
             try {
                 await this.$store.dispatch('coaches/loadCoaches', {forceRefresh: force});
             } catch (error) {
-                this.error = 'Something went wrong on coaches load. Try again later.';
+                this.error = error.message || 'Something went wrong on coaches load. Try again later.';
             }
             this.isLoading = false;
         }
