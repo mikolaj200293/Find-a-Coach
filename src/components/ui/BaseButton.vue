@@ -44,14 +44,6 @@ a {
     display: inline-block;
 }
 
-a:hover,
-a:active,
-button:hover,
-button:active {
-    background-color: #270041;
-    border-color: #270041;
-}
-
 .flat {
     background-color: transparent;
     color: #3a0061;
@@ -69,5 +61,25 @@ button:active {
 .outline:hover,
 .outline:active {
     background-color: #edd2ff;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.show-password-btn {
+    padding: 0;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #3d008d;
+    text-decoration: underline;
 }
 </style>

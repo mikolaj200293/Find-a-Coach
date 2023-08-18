@@ -15,7 +15,11 @@
                 <p v-if="!email.isValid">The e-mail address is incorrect.</p>
                 <div class="form-control" :class="{invalid: !password.isValid}">
                     <label for="password">Password</label>
-                    <input type="password" id="password" v-model.trim="password.val" @blur="clearValidity('password')"/>
+                    <input :type="showPassword ? 'text' : 'password'" id="password" v-model.trim="password.val"
+                           @blur="clearValidity('password')"/>
+                    <base-button @click="togglePasswordVisibility" type="button" mode="show-password-btn">
+                        {{ showPassword ? 'Hide' : 'Show' }} Password
+                    </base-button>
                 </div>
                 <p v-if="!password.isValid">Password must be at least 6 characters long.</p>
                 <base-button>{{ submitButtonCaption }}</base-button>
@@ -47,7 +51,8 @@ export default {
             formIsValid: true,
             mode: 'login',
             isLoading: false,
-            error: null
+            error: null,
+            showPassword: false
         };
     },
     computed: {
@@ -96,14 +101,13 @@ export default {
             const formData = {
                 email: this.email.val,
                 password: this.password.val,
+                mode: this.mode
             };
 
             try {
-                if (this.mode === 'login') {
-                    // ...
-                } else {
-                    await this.$store.dispatch('signup', formData);
-                }
+                await this.$store.dispatch('auth', formData);
+                const redirectUrl = `/${this.$route.query.redirect || 'coaches'}`;
+                this.$router.replace(redirectUrl);
             } catch (error) {
                 this.error = error.message || 'Something went wrong on user registration. Try again later.';
             }
@@ -116,6 +120,9 @@ export default {
             } else {
                 this.mode = 'login';
             }
+        },
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
         }
     }
 };

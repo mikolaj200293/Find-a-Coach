@@ -10,7 +10,9 @@
             <base-card>
                 <div class="controls">
                     <base-button mode="outline" @click="loadCoaches(true)">Refresh</base-button>
-                    <base-button link to="/register" v-if="!isCoach && !isLoading">Register coach</base-button>
+                    <base-button link to="/auth?redirect=register" v-if="!isAuthenticated">Login to Register as a Coach</base-button>
+                    <base-button link to="/register" v-if="coachRegistrationEnabled">Register coach
+                    </base-button>
                 </div>
                 <div v-if="isLoading">
                     <base-spinner></base-spinner>
@@ -35,9 +37,10 @@
 import CoachItem from '@/components/coaches/CoachItem.vue';
 import CoachFilter from '@/components/coaches/CoachFilter.vue';
 import BaseDialog from '@/components/ui/BaseDialog.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
-    components: {BaseDialog, CoachFilter, CoachItem},
+    components: {BaseButton, BaseDialog, CoachFilter, CoachItem},
     data() {
         return {
             activeFilters: {
@@ -46,7 +49,7 @@ export default {
                 career: true
             },
             isLoading: false,
-            error: null
+            error: null,
         };
     },
     computed: {
@@ -67,6 +70,12 @@ export default {
         },
         isCoach() {
             return this.$store.getters['coaches/isCoach'];
+        },
+        isAuthenticated() {
+            return this.$store.getters.isAuthenticated;
+        },
+        coachRegistrationEnabled() {
+            return !this.isCoach && !this.isLoading && this.isAuthenticated
         }
     },
     methods: {
